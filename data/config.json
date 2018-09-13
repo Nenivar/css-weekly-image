@@ -4,17 +4,17 @@
         "talk" : {
             "bg" : [255, 255, 255],
             "icon" : "icons/talk.png",
-            "text" : "000000"
+            "text" : [0, 0, 0]
         },
         "social" : {
             "bg" : [255, 255, 255],
             "icon" : "icons/social.png",
-            "text" : "000000"
+            "text" : [0, 0, 0]
         },
         "hack" : {
             "bg" : [255, 255, 255],
             "icon" : "icons/hack.png",
-            "text" : "000000"
+            "text" : [0, 0, 0]
         }
     }
 }
