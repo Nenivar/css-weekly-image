@@ -22,20 +22,24 @@ module Processing
     arr.join(' ')
   end
 
-  def drawText!(base, text, col, size=70, yOffset=30)
+  def drawText!(base, text, col, size=65, yOffset=30, stroke=false)
     t = Draw.new
     t.font_family = Config.getConfig()['font_name']
     t.pointsize = size
     t.gravity = CenterGravity
-    #t.stroke = 'black'
-    #t.stroke_width = 5
+    if stroke
+      t.stroke = 'black'
+      t.stroke_width = 10
+      stroke_antialias = true
+      #t.stroke_antialias = true
+    end
 
     # if string too long
     # split into two strings
     # draw other string w/ y offset
     metrics = t.get_type_metrics(text)
     if metrics.width > Config.getConfig['image_size'][0]
-      drawText!(base, tailOfString(text), col, size, yOffset + 60)
+      drawText!(base, tailOfString(text), col, size, yOffset + 60, stroke)
       text = text.split(' ')[0]
     end
 
@@ -64,12 +68,28 @@ module Processing
       bg = createBlankImg(size[0], size[1], 'white')
     end
 
-    icon = readImg(catData['icon'])
+    icon = readImg(getIconForEvent(data))
     icon.resize_to_fit!(size[0]/2, size[1]/2)
     bg.composite!(icon, NorthGravity, OverCompositeOp)
-    drawText!(bg, data['name'], arrToPixel(catData['text']))
+
+    drawText!(bg, data['name'], getTextColForEvent(data), 65, 30, true)
+    drawText!(bg, data['name'], getTextColForEvent(data))
+
     bg.format = 'png'
+
     return bg
+  end
+
+  def getTextColForEvent(event_data)
+    return event_data['text'] == nil ? 'black' : arrToPixel(event_data['text'])
+  end
+
+  def getIconForEvent(event_data)
+    return event_data['icon'] == nil ? getCategoryForEvent(event_data)['icon'] : event_data['icon']
+  end
+
+  def getCategoryForEvent(event_data)
+    return Config.getConfig()['categories'][event_data['category']]
   end
 
   def createEventLabel(event_id)
@@ -80,7 +100,7 @@ module Processing
     bg = createBlankImg(size[0], size[1], arrToPixel(catData['bg']))
 
     dateStr = DateTime.parse(data['date']).strftime('%e/%m')
-    drawText!(bg, dateStr, 'black', 50, 5)
+    drawText!(bg, dateStr, arrToPixel(catData['text']), 40, 5)
     bg.format = 'png'
     return bg
   end

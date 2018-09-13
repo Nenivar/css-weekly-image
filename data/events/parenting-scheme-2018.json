@@ -1,5 +1,9 @@
 {
     "id" : "parenting-scheme-2018",
+    "name" : "Thanks",
     "date" : "2018-09-27T11:00:00+00:00",
-    "type" : "social"
+    "category" : "social",
+    "bg" : "bg/parents.jpg",
+    "icon" : "icons/family.png",
+    "text" : [255, 255, 255]
 }

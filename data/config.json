@@ -4,19 +4,19 @@
     "font_name" : "Bebas Neue",
     "categories" : {
         "talk" : {
-            "bg" : [255, 255, 255],
+            "bg" : [239, 232, 11],
             "icon" : "icons/talk.png",
-            "text" : [255, 255, 255]
+            "text" : [0, 0, 0]
         },
         "social" : {
-            "bg" : [255, 255, 255],
+            "bg" : [229, 121, 204],
             "icon" : "icons/social.png",
-            "text" : [255, 255, 255]
+            "text" : [0, 0, 0]
         },
         "hack" : {
-            "bg" : [255, 255, 255],
+            "bg" : [38, 40, 58],
             "icon" : "icons/hack.png",
-            "text" : [0, 0, 0]
+            "text" : [255, 255, 255]
         }
     }
 }

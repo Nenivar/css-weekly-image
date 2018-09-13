@@ -3,5 +3,7 @@
     "name" : "Welcome Drinks",
     "date" : "2018-09-24T18:00:00+00:00",
     "category" : "social",
-    "bg" : "bg/pub.png"
+    "bg" : "bg/pub.png",
+    "text" : [255, 255, 255],
+    "icon" : "icons/social.png"
 }

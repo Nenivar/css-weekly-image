@@ -1,5 +1,8 @@
 {
     "id" : "test-hack-2018",
+    "name" : "Test Hack",
     "date" : "2018-09-29T17:30:00+00:00",
-    "type" : "hack"
+    "bg" : "bg/hack.jpg",
+    "category" : "hack",
+    "text" : [255, 255, 255]
 }

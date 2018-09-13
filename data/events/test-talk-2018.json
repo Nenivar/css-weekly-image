@@ -2,5 +2,7 @@
     "id" : "test-talk-2018",
     "name" : "Test Talk",
     "date" : "2018-09-28T13:00:00+00:00",
-    "category" : "talk"
+    "bg" : "bg/talk2.jpeg",
+    "category" : "talk",
+    "text" : [255, 255, 255]
 }
