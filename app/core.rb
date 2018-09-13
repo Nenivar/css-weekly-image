@@ -1,9 +1,6 @@
-require 'json'
-
-require_relative 'data'
-include JsonData
-
 OUTPUT_PATH = '../../output/'
 
-d = JsonData.readJsonEvent('welcome-drinks-2018')
-print(d)
+require_relative 'proc'
+include Processing
+
+Processing.createWeek('18-09-24').display
