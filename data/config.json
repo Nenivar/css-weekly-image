@@ -1,15 +1,19 @@
 {
+    "image_size" : [100, 100],
     "types" : {
         "talk" : {
             "bg" : "FFFFFF",
+            "icon" : "icons/talk.png",
             "text" : "000000"
         },
         "social" : {
             "bg" : "FFFFFF",
+            "icon" : "icons/social.png",
             "text" : "000000"
         },
         "hack" : {
             "bg" : "FFFFFF",
+            "icon" : "icons/hack.png",
             "text" : "000000"
         }
     }
