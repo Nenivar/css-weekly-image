@@ -1,12 +1,16 @@
 require 'rmagick'
 include Magick
 
+require_relative 'data'
+include Config
+include JsonData
+
 def createBlankImg(width, height, bg_col)
   Image.new(width, height) { self.background_color = bg_col }
 end
 
 def readImg(path)
-  Magick::Image.read("assets/icons/social.png").first
+  Magick::Image.read('assets/' + path).first
 end
 
 def drawText!(base, text)
@@ -18,15 +22,21 @@ def drawText!(base, text)
 end
 
 def createEventImg(event_id)
-  f = createBlankImg(500, 500, 'white')
-  icon = readImg("assets/icons/social.png")
-  icon.resize_to_fit!(50, 100)
-  g = f.composite(icon, CenterGravity, OverCompositeOp)
-  drawText!(g, 'dog')
-  g.write('test.png')
+  data = readJsonEvent(event_id)
+  size = Config.getConfig()['image_size']
+
+  catData = Config.getConfig()['categories'][data['category']]
+  bg = catData['bg']
+
+  f = createBlankImg(size[0], size[1], Pixel.new(bg[0], bg[1], bg[2], 255))
+  icon = readImg(catData['icon'])
+  icon.resize_to_fit!(size[0]/2, size[1]/2)
+  f.composite!(icon, CenterGravity, OverCompositeOp)
+  drawText!(f, data['name'])
+  f.write('test.png')
 end
 
-createEventImg('dog')
+createEventImg('welcome-drinks-2018')
 
 =begin def combine(imgs)
   all = ImageList.new(img[0], img[1]...)

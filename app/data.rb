@@ -17,3 +17,15 @@ module JsonData
     readJsonData(EVENTS_PATH + event_id + '.json')
   end
 end
+
+module Config
+  include JsonData
+
+  CONFIG_PATH = 'config.json'
+  @config = nil
+
+  def getConfig()
+    @config = JsonData.readJsonData(CONFIG_PATH) if @config == nil
+    return @config
+  end
+end
