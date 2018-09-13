@@ -1,5 +1,6 @@
 require 'rmagick'
 include Magick
+require 'date'
 
 require_relative 'data'
 include Config
@@ -19,10 +20,10 @@ def tailOfString(str)
   arr.join(' ')
 end
 
-def drawText!(base, text, col, yOffset=30)
+def drawText!(base, text, col, size=70, yOffset=30)
   t = Draw.new
   t.font_family = Config.getConfig()['font_name']
-  t.pointsize = 70
+  t.pointsize = size
   t.gravity = CenterGravity
   #t.stroke = 'black'
   #t.stroke_width = 5
@@ -32,7 +33,7 @@ def drawText!(base, text, col, yOffset=30)
   # draw other string w/ y offset
   metrics = t.get_type_metrics(text)
   if metrics.width > Config.getConfig['image_size'][0]
-    drawText!(base, tailOfString(text), col, yOffset + 60)
+    drawText!(base, tailOfString(text), col, size, yOffset + 60)
     text = text.split(' ')[0]
   end
 
@@ -65,11 +66,31 @@ def createEventImg(event_id)
   icon.resize_to_fit!(size[0]/2, size[1]/2)
   bg.composite!(icon, NorthGravity, OverCompositeOp)
   drawText!(bg, data['name'], arrToPixel(catData['text']))
-  bg.write('test.png')
+  bg.format = 'png'
+  return bg
 end
 
-createEventImg('welcome-drinks-2018')
-#createEventImg('test-talk-2018')
+def createLabel(event_id)
+  data = readJsonEvent(event_id)
+  catData = Config.getConfig()['categories'][data['category']]
+
+  size = Config.getConfig()['label_size']
+  bg = createBlankImg(size[0], size[1], arrToPixel(catData['bg']))
+
+  dateStr = DateTime.parse(data['date']).strftime('%e/%m')
+  drawText!(bg, dateStr, 'black', 50, 5)
+  bg.format = 'png'
+  return bg
+end
+
+def addLabelToImg(img, label)
+  list = Magick::ImageList.new
+  list.from_blob(img.to_blob, label.to_blob)
+  list.append(true)
+end
+
+d = addLabelToImg(createEventImg('welcome-drinks-2018'), createLabel('welcome-drinks-2018'))
+d.display
 
 =begin def combine(imgs)
   all = ImageList.new(img[0], img[1]...)
