@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     json (2.1.0)
+    rmagick (2.16.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   json
+  rmagick
 
 BUNDLED WITH
    1.16.4
