@@ -1,0 +1,16 @@
+{
+    "types" : {
+        "talk" : {
+            "bg" : "FFFFFF",
+            "text" : "000000"
+        },
+        "social" : {
+            "bg" : "FFFFFF",
+            "text" : "000000"
+        },
+        "hack" : {
+            "bg" : "FFFFFF",
+            "text" : "000000"
+        }
+    }
+}
