@@ -1,6 +1,7 @@
 {
-    "id" : "welcome-drinks-2018.json",
+    "id" : "welcome-drinks-2018",
     "name" : "Welcome Drinks",
     "date" : "2018-09-24T18:00:00+00:00",
-    "category" : "social"
+    "category" : "social",
+    "bg" : "bg/pub.png"
 }

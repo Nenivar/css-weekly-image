@@ -15,10 +15,13 @@ end
 
 def drawText!(base, text, col)
   t = Draw.new
-  t.font_family = 'helvetica'
-  t.pointsize = 52
+  t.font_family = Config.getConfig()['font_name']
+  t.pointsize = 70
   t.gravity = CenterGravity
-  t.annotate(base, 0, 0, 0, 0, text) { self.fill = col }
+  t.stroke = 'black'
+  t.stroke_width = 2
+
+  t.annotate(base, 0, 0, 0, 50, text) { self.fill = col }
 end
 
 QUANT_MULT = 257
@@ -33,16 +36,25 @@ def createEventImg(event_id)
 
   catData = Config.getConfig()['categories'][data['category']]
 
-  f = createBlankImg(size[0], size[1], 'white')
+  bg = nil
+  bgData = data['bg']
+  if bgData != nil && bgData != ''
+    # image
+    bg = readImg(data['bg'])
+  else
+    # just colour
+    bg = createBlankImg(size[0], size[1], 'white')
+  end
+
   icon = readImg(catData['icon'])
   icon.resize_to_fit!(size[0]/2, size[1]/2)
-  f.composite!(icon, CenterGravity, OverCompositeOp)
-  drawText!(f, data['name'], arrToPixel(catData['text']))
-  f.write('test.png')
+  bg.composite!(icon, NorthGravity, OverCompositeOp)
+  drawText!(bg, data['name'], arrToPixel(catData['text']))
+  bg.write('test.png')
 end
 
-#createEventImg('welcome-drinks-2018')
-createEventImg('test-talk-2018')
+createEventImg('welcome-drinks-2018')
+#createEventImg('test-talk-2018')
 
 =begin def combine(imgs)
   all = ImageList.new(img[0], img[1]...)
