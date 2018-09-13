@@ -70,7 +70,7 @@ def createEventImg(event_id)
   return bg
 end
 
-def createLabel(event_id)
+def createEventLabel(event_id)
   data = readJsonEvent(event_id)
   catData = Config.getConfig()['categories'][data['category']]
 
@@ -89,12 +89,20 @@ def addLabelToImg(img, label)
   list.append(true)
 end
 
-d = addLabelToImg(createEventImg('welcome-drinks-2018'), createLabel('welcome-drinks-2018'))
-d.display
-
-=begin def combine(imgs)
-  all = ImageList.new(img[0], img[1]...)
-  all.write('etc.png')
-  exit
+# event img, & label below
+def createEventFull(event_id)
+  addLabelToImg(createEventImg(event_id), createEventLabel(event_id))
 end
-=end
+
+# stitches together full event images left -> right
+def createWeek(week_id)
+  data = JsonData.readJsonWeek(week_id)
+
+  list = Magick::ImageList.new
+
+  d = data['ids'].map { |x| createEventFull(x).to_blob }
+  list.from_blob(*d)
+
+  list.append(false)
+end
+createWeek('18-09-24').display 

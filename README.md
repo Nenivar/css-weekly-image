@@ -11,3 +11,4 @@ Code is kinda gross at parts
 ## TODO
 * More default values
 * Text col in indiv. event too?
+* Any sort of error messages really
