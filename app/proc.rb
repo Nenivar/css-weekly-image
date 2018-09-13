@@ -13,15 +13,30 @@ def readImg(path)
   Magick::Image.read('assets/' + path).first
 end
 
-def drawText!(base, text, col)
+def tailOfString(str)
+  arr = str.split(' ')
+  arr.delete_at(0)
+  arr.join(' ')
+end
+
+def drawText!(base, text, col, yOffset=30)
   t = Draw.new
   t.font_family = Config.getConfig()['font_name']
   t.pointsize = 70
   t.gravity = CenterGravity
-  t.stroke = 'black'
-  t.stroke_width = 2
+  #t.stroke = 'black'
+  #t.stroke_width = 5
 
-  t.annotate(base, 0, 0, 0, 50, text) { self.fill = col }
+  # if string too long
+  # split into two strings
+  # draw other string w/ y offset
+  metrics = t.get_type_metrics(text)
+  if metrics.width > Config.getConfig['image_size'][0]
+    drawText!(base, tailOfString(text), col, yOffset + 60)
+    text = text.split(' ')[0]
+  end
+
+  t.annotate(base, 0, 0, 0, yOffset, text) { self.fill = col }
 end
 
 QUANT_MULT = 257
