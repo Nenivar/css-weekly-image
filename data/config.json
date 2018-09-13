@@ -1,6 +1,8 @@
 {
     "image_size" : [250, 250],
     "label_size" : [250, 50],
+    "header_height" : 70,
+    "css_icon" : "icons/css.png",
     "font_name" : "Bebas Neue",
     "categories" : {
         "talk" : {

@@ -22,11 +22,11 @@ module Processing
     arr.join(' ')
   end
 
-  def drawText!(base, text, col, size=65, yOffset=30, stroke=false)
+  def drawText!(base, text, col, size=65, xOffset=0, yOffset=30, stroke=false, anchor=CenterGravity)
     t = Draw.new
     t.font_family = Config.getConfig()['font_name']
     t.pointsize = size
-    t.gravity = CenterGravity
+    t.gravity = anchor
     if stroke
       t.stroke = 'black'
       t.stroke_width = 10
@@ -39,11 +39,11 @@ module Processing
     # draw other string w/ y offset
     metrics = t.get_type_metrics(text)
     if metrics.width > Config.getConfig['image_size'][0]
-      drawText!(base, tailOfString(text), col, size, yOffset + 60, stroke)
+      drawText!(base, tailOfString(text), col, size, xOffset, yOffset + 60, stroke)
       text = text.split(' ')[0]
     end
 
-    t.annotate(base, 0, 0, 0, yOffset, text) { self.fill = col }
+    t.annotate(base, 0, 0, xOffset, yOffset, text) { self.fill = col }
   end
 
   QUANT_MULT = 257
@@ -72,7 +72,7 @@ module Processing
     icon.resize_to_fit!(size[0]/2, size[1]/2)
     bg.composite!(icon, NorthGravity, OverCompositeOp)
 
-    drawText!(bg, data['name'], getTextColForEvent(data), 65, 30, true)
+    drawText!(bg, data['name'], getTextColForEvent(data), 65, 4, 30, true)
     drawText!(bg, data['name'], getTextColForEvent(data))
 
     bg.format = 'png'
@@ -100,7 +100,7 @@ module Processing
     bg = createBlankImg(size[0], size[1], arrToPixel(catData['bg']))
 
     dateStr = DateTime.parse(data['date']).strftime('%e/%m')
-    drawText!(bg, dateStr, arrToPixel(catData['text']), 40, 5)
+    drawText!(bg, dateStr, arrToPixel(catData['text']), 40, 0, 5)
     bg.format = 'png'
     return bg
   end
@@ -126,5 +126,33 @@ module Processing
     list.from_blob(*d)
 
     list.append(false)
+  end
+
+  def createHeader(week_id)
+    data = JsonData.readJsonWeek(week_id)
+
+    width = data['ids'].length * getConfig()['image_size'][0]
+    height = getConfig()['header_height']
+    bg = createBlankImg(width, height, arrToPixel([25, 26, 25]))
+
+    icon = readImg(getConfig()["css_icon"])
+    icon.resize_to_fit!(width/1.5, height/1.5)
+    bg.composite!(icon, WestGravity, 20, 0, OverCompositeOp)
+
+    # TODO: not this :(
+    t = Draw.new
+    t.font_family = Config.getConfig()['font_name']
+    t.pointsize = 45
+    t.gravity = EastGravity
+    t.annotate(bg, 0, 0, 20, 7, 'Week 0') { self.fill = 'white' }
+    bg.format = 'png'
+
+    drawText!(bg, 'Events', 'white', 60, 0, 7)
+
+    return bg
+  end
+
+  def createFullImg(week_id)
+    addLabelToImg(createHeader(week_id), createWeek(week_id))
   end
 end
