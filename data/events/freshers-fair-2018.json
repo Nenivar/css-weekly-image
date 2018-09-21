@@ -1,0 +1,9 @@
+{
+    "id" : "freshers-fair-2018",
+    "name" : "Fresher's Fair",
+    "date" : "2018-09-28T11:00:00+00:00",
+    "category" : "social",
+    "bg" : "bg/fair.jpg",
+    "text" : [255, 255, 255],
+    "icon" : "icons/popper.png"
+}

@@ -1,9 +1,9 @@
 {
     "id" : "parenting-scheme-2018",
-    "name" : "Thanks",
-    "date" : "2018-09-27T11:00:00+00:00",
+    "name" : "Family meetup",
+    "date" : "2018-09-27T13:00:00+00:00",
     "category" : "social",
-    "bg" : "bg/parents.jpg",
+    "bg" : "bg/talk.jpg",
     "icon" : "icons/family.png",
     "text" : [255, 255, 255]
 }

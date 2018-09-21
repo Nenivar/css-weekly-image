@@ -136,7 +136,7 @@ module Processing
     bg = createBlankImg(width, height, arrToPixel([25, 26, 25]))
 
     icon = readImg(getConfig()["css_icon"])
-    icon.resize_to_fit!(width/1.5, height/1.5)
+    icon.resize_to_fit!(width/2, height/2)
     bg.composite!(icon, WestGravity, 20, 0, OverCompositeOp)
 
     # TODO: not this :(
